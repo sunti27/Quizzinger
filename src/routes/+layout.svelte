@@ -5,6 +5,20 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
+
+	import { AppShell } from '@skeletonlabs/skeleton';
+	import { Drawer } from '@skeletonlabs/skeleton';
+
+	import Navigation from '$lib/Navigation.svelte';
+	import Header from '$lib/Header.svelte';
 </script>
 
-<slot />
+<Drawer width="w-auto" rounded="rounded-none"><Navigation /></Drawer>
+
+<AppShell slotSidebarLeft="w-0 lg:w-auto">
+	<svelte:fragment slot="header"><Header /></svelte:fragment>
+
+	<svelte:fragment slot="sidebarLeft"><Navigation /></svelte:fragment>
+
+	<slot />
+</AppShell>
