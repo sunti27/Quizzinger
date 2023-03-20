@@ -7,18 +7,12 @@
 
 	let flipped = false;
 
-	const keyCodes4flip = [
-		'Space',
-		'ArrowUp',
-		'ArrowDown',
-	];
-
 	function flip() {
 		flipped = !flipped;
 	}
 
 	function handleKeydown(event) {
-		if (keyCodes4flip.includes(event.code)) {
+		if (['Space', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
 			event.preventDefault();
 			flip();
 		}
@@ -27,14 +21,19 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="card-wrapper w-96 h-44">
-	<button class="card-wrapper-inner w-full h-full" class:flipped on:click={flip} on:keypress={handleKeydown}>
-		<div class="card front bg-surface-700">
-			<section class="p-6">{word1}</section>
+<div class="card-wrapper w-full h-44">
+	<button
+		class="card-wrapper-inner w-full h-full"
+		class:flipped
+		on:click={flip}
+		on:keypress={handleKeydown}
+	>
+		<div class="card front bg-surface-100-800-token">
+			<section>{word1}</section>
 		</div>
 
-		<div class="card back">
-			<section class="p-6">{word2}</section>
+		<div class="card back bg-surface-100-800-token">
+			<section>{word2}</section>
 		</div>
 	</button>
 </div>
@@ -52,16 +51,16 @@
 	}
 
 	.card {
-		@apply rounded bg-surface-50-900-token;
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
 		backface-visibility: hidden;
+		@apply rounded flex items-center justify-center top-0 left-0 w-full h-full absolute;
 	}
 
-	.back, .flipped {
+	.card section {
+		@apply text-2xl font-bold text-center;
+	}
+
+	.back,
+	.flipped {
 		transform: rotateX(180deg);
 	}
 </style>
