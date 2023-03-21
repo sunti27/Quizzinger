@@ -1,12 +1,21 @@
 <script>
+	/** @type {string} */
+	export let word1;
+
+	/** @type {string} */
+	export let word2;
+
 	let flipped = false;
 
 	function flip() {
 		flipped = !flipped;
 	}
 
+	/** @param {KeyboardEvent} event */
 	function handleKeydown(event) {
-		if (event.key === ' ') {
+		if (['Space', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
+			event.preventDefault();
+			event.stopPropagation();
 			flip();
 		}
 	}
@@ -14,19 +23,21 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="card-wrapper">
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="card-wrapper-inner w-96 h-44" class:flipped on:click={flip}>
-		<div class="card front">
-			<section class="p-6">tree</section>
-			<footer class="card-footer text-right">Englisch</footer>
+<div class="card-wrapper w-full h-44">
+	<button
+		class="card-wrapper-inner w-full h-full"
+		class:flipped
+		on:click={flip}
+		on:keydown={handleKeydown}
+	>
+		<div class="card front surface-default">
+			<section>{word1}</section>
 		</div>
 
-		<div class="card back">
-			<section class="p-6">Baum</section>
-			<footer class="card-footer text-right">Deutsch</footer>
+		<div class="card back surface-default">
+			<section>{word2}</section>
 		</div>
-	</div>
+	</button>
 </div>
 
 <style lang="postcss">
@@ -38,23 +49,19 @@
 		position: relative;
 		transition: transform 0.5s ease;
 		transform-style: preserve-3d;
+		font: default;
 	}
 
-	.card {
-		@apply rounded;
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
+	.front, .back {
 		backface-visibility: hidden;
+		@apply rounded flex items-center justify-center top-0 left-0 w-full h-full absolute;
 	}
 
-	.back {
-		transform: rotateX(180deg);
+	.front > section, .back > section {
+		@apply text-2xl font-bold text-center;
 	}
 
-	.flipped {
+	.back, .flipped {
 		transform: rotateX(180deg);
 	}
 </style>
