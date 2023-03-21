@@ -26,7 +26,6 @@
 <AppRail
 	background="bg-surface-50-900-token"
 	border="border-r border-surface-500/30"
-	regionLead="border-r border-surface-500/30"
 >
 	{#each routes as route}
 		<AppRailTile
@@ -39,8 +38,7 @@
 			<i class="fa-solid fa-xl {route.icon}" />
 		</AppRailTile>
 	{/each}
-	<AppRailTile slot="trail" hover="">
-		<LightSwitch />
+	<AppRailTile slot="trail">
+		<LightSwitch rounded="rounded" />
 	</AppRailTile>
-		
 </AppRail>

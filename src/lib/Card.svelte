@@ -11,9 +11,11 @@
 		flipped = !flipped;
 	}
 
+	/** @param {KeyboardEvent} event */
 	function handleKeydown(event) {
 		if (['Space', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
 			event.preventDefault();
+			event.stopPropagation();
 			flip();
 		}
 	}
@@ -26,13 +28,13 @@
 		class="card-wrapper-inner w-full h-full"
 		class:flipped
 		on:click={flip}
-		on:keypress={handleKeydown}
+		on:keydown={handleKeydown}
 	>
-		<div class="card front bg-surface-100-800-token">
+		<div class="card front surface-default">
 			<section>{word1}</section>
 		</div>
 
-		<div class="card back bg-surface-100-800-token">
+		<div class="card back surface-default">
 			<section>{word2}</section>
 		</div>
 	</button>
@@ -50,17 +52,16 @@
 		font: default;
 	}
 
-	.card {
+	.front, .back {
 		backface-visibility: hidden;
 		@apply rounded flex items-center justify-center top-0 left-0 w-full h-full absolute;
 	}
 
-	.card section {
+	.front > section, .back > section {
 		@apply text-2xl font-bold text-center;
 	}
 
-	.back,
-	.flipped {
+	.back, .flipped {
 		transform: rotateX(180deg);
 	}
 </style>
