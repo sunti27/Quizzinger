@@ -22,4 +22,12 @@
 	</svelte:fragment>
 
 	<h1 class="underline">Quizzinger</h1>
+
+	<svelte:fragment slot="trail">
+		<div class="flex items-center">
+			<a class="btn btn-sm ml-4" href="/account">
+				<i class="fa-solid fa-2xl fa-circle-user" />
+			</a>
+		</div>
+	</svelte:fragment>
 </AppBar>
