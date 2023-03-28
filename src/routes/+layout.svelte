@@ -17,6 +17,7 @@
 
 	export let data;
 	$: ({ supabase } = data);
+	$: ({ session } = data);
 
 	onMount(() => {
 		const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
@@ -30,7 +31,7 @@
 <Drawer width="w-auto" rounded="rounded-none"><Navigation /></Drawer>
 
 <AppShell slotSidebarLeft="w-0 lg:w-auto">
-	<svelte:fragment slot="header"><Header /></svelte:fragment>
+	<svelte:fragment slot="header"><Header loggedIn={!!session} /></svelte:fragment>
 
 	<svelte:fragment slot="sidebarLeft"><Navigation /></svelte:fragment>
 

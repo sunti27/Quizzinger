@@ -5,6 +5,9 @@
 	function openDrawer() {
 		drawerStore.open();
 	}
+
+	/** @type {boolean} */
+	export let loggedIn;
 </script>
 
 <AppBar
@@ -25,9 +28,15 @@
 
 	<svelte:fragment slot="trail">
 		<div class="flex items-center">
-			<a class="btn btn-sm ml-4" href="/account">
-				<i class="fa-solid fa-2xl fa-circle-user" />
-			</a>
+			{#if loggedIn}
+				<a class="btn btn-sm ml-4" href="/account">
+					<i class="fa-solid fa-2xl fa-circle-user" />
+				</a>
+			{:else}
+				<a class="btn btn-sm ml-4" href="/login">
+					<i class="fa-solid fa-2xl fa-right-to-bracket" />
+				</a>
+			{/if}
 		</div>
 	</svelte:fragment>
 </AppBar>

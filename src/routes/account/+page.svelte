@@ -2,16 +2,11 @@
     import { enhance } from '$app/forms';
 
     export let data;
-    export let form;
 
-    let { session, profile } = data;
+    let { session } = data;
 
-    let profileForm;
-    let loading = false;
-    let fullName = profile?.full_name;
-    let username = profile?.username;
-    let website = profile?.website;
-    let avatarUrl = profile?.avatar_url;
+	let loading = false;
+	let email = session.user.email;
 
     function handleSubmit() {
         loading = true;
@@ -21,47 +16,17 @@
     }
 </script>
 
-<div class="form-widget">
-	<form
-		class="form-widget"
-		method="post"
-		action="?/update"
-		use:enhance={handleSubmit}
-		bind:this={profileForm}
-	>
-		<div>
-			<label for="email">Email</label>
-			<input id="email" type="text" value={session.user.email} disabled />
-		</div>
+<div class="container h-full mx-auto max-w-3xl p-12 flex justify-start items-center flex-col gap-6">
+	<div class="w-full flex flex-row justify-between items-center">
+		<h4 class="justify-end">{email}</h4>
 
-		<div>
-			<label for="fullName">Full Name</label>
-			<input id="fullName" name="fullName" type="text" value={form?.fullName ?? fullName} />
-		</div>
+		<form method="post" action="?/signout" use:enhance={handleSubmit}>
+			<div>
+				<button class="btn variant-ghost-secondary" disabled={loading}>Sign Out</button>
+			</div>
+		</form>
+	</div>
 
-		<div>
-			<label for="username">Username</label>
-			<input id="username" name="username" type="text" value={form?.username ?? username} />
-		</div>
 
-		<div>
-			<label for="website">Website</label>
-			<input id="website" name="website" type="website" value={form?.website ?? website} />
-		</div>
-
-		<div>
-			<input
-				type="submit"
-				class="button block primary"
-				value={loading ? 'Loading...' : 'Update'}
-				disabled={loading}
-			/>
-		</div>
-	</form>
-
-	<form method="post" action="?/signout" use:enhance={handleSubmit}>
-		<div>
-			<button class="button block" disabled={loading}>Sign Out</button>
-		</div>
-	</form>
+	<hr class="w-full" />
 </div>
