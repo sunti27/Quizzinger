@@ -22,7 +22,7 @@
 
 		<form method="post" action="?/signout" use:enhance={handleSubmit}>
 			<div>
-				<button class="btn variant-ghost-secondary" disabled={loading}>Sign Out</button>
+				<button class="btn variant-ghost-surface" disabled={loading}>Sign Out</button>
 			</div>
 		</form>
 	</div>
