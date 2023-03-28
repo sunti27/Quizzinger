@@ -13,12 +13,8 @@ export const load = (async ({ locals: { getSession } }) => {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	signout: async ({ locals: { supabase, getSession } }) => {
-		const session = await getSession();
-
-		if (session) {
-			await supabase.auth.signOut();
-			throw redirect(303, '/');
-		}
+	signout: async ({ locals: { supabase } }) => {
+		await supabase.auth.signOut();
+		throw redirect(303, '/');
 	}
 };
