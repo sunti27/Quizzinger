@@ -1,60 +1,22 @@
 <script>
-	import Card from '$lib/Card.svelte';
-
-	let selectedIndex = 0;
-
-	let cardSampleData = [
-		['tree', 'Baum'],
-		['house', 'Haus'],
-		['car', 'Auto'],
-		['cat', 'Katze'],
-		['dog', 'Hund'],
-		['bird', 'Vogel'],
-        ['fish', 'Fisch'],
-	];
-
-	$: max = cardSampleData.length - 1;
-
-	function back() {
-		selectedIndex = Math.max(0, selectedIndex - 1);
-	}
-
-	function next() {
-		selectedIndex = Math.min(max, selectedIndex + 1);
-	}
-
-	/** @param {KeyboardEvent} event */
-	function handleKeydown(event) {
-		if (event.code === 'ArrowLeft') {
-			back();
-		} else if (event.code === 'ArrowRight') {
-			next();
-		}
-	}
+    export let data;
+	let datasets = data.datasets;
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
-
-<div class="container h-full mx-auto flex justify-center items-center">
-	<div class="flex flex-col gap-2 w-9/12 sm:max-w-sm">
-		<div class="flex flex-row">
-			{#each [cardSampleData[selectedIndex]] as [word1, word2] (selectedIndex)}
-				<Card {word1} {word2} />
-			{/each}
-		</div>
-		<div class="flex flex-row justify-items-stretch rounded gap-2">
-			<button class="control-button surface-default" on:click={back} disabled={selectedIndex <= 0}>
-                <i class="fa-solid fa-xl fa-arrow-left" />
-            </button>
-			<button class="control-button surface-default" on:click={next} disabled={selectedIndex >= max}>
-                <i class="fa-solid fa-xl fa-arrow-right" />
-            </button>
-		</div>
+{#if datasets && datasets.length}
+		<div class="container mx-auto my-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 auto-rows-min">
+		{#each datasets as dataset}
+			<div class="card card-hover surface-default p-4 flex flex-col justify-start max-w-sm sm:w-fit mx-auto">
+				<header class="card-header"><h3>{dataset.title}</h3></header>
+				<section class="p-4">{dataset.desc}</section>
+				<footer class="card-footer flex flex-row justify-end">
+					<a href="/cards/{dataset.id}" class="btn variant-filled-primary">Learn</a>
+				</footer>
+			</div>
+		{/each}
 	</div>
-</div>
-
-<style lang="postcss">
-	.control-button {
-		@apply w-full p-2 rounded border border-surface-500/30;
-	}
-</style>
+{:else}
+	<div class="container h-full mx-auto flex justify-center items-center">
+		<h1>There are no public datasets yet!</h1>
+	</div>
+{/if}

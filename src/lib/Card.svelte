@@ -1,9 +1,9 @@
 <script>
 	/** @type {string} */
-	export let word1;
+	export let question;
 
 	/** @type {string} */
-	export let word2;
+	export let answer;
 
 	let flipped = false;
 
@@ -31,11 +31,11 @@
 		on:keydown={handleKeydown}
 	>
 		<div class="card front surface-default">
-			<section>{word1}</section>
+			<section>{question}</section>
 		</div>
 
 		<div class="card back surface-default">
-			<section>{word2}</section>
+			<section>{answer}</section>
 		</div>
 	</button>
 </div>
