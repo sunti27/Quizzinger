@@ -32,7 +32,7 @@
 			tag="a"
 			href={route.href}
 			label={route.label}
-			class={route.href === $page.url.pathname ? '!bg-primary-500' : ''}
+			class={route.href === $page.url.pathname ? '!bg-primary-700' : ''}
 			on:click={closeDrawer}
 		>
 			<i class="fa-solid fa-xl {route.icon}" />
