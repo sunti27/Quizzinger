@@ -28,7 +28,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="container h-full mx-auto flex justify-center items-center">
-	<div class="flex flex-col gap-2 w-9/12 sm:max-w-sm">
+	<div class="flex flex-col gap-2 w-11/12 sm:max-w-sm">
 		<div class="flex flex-row">
 			{#each [entries[selectedIndex]] as { question, answer } (selectedIndex)}
 				<Card {question} {answer} />
