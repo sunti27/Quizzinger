@@ -24,7 +24,7 @@
 		</div>
 	</svelte:fragment>
 
-	<h1 class="underline">Quizzinger</h1>
+	<h1 class="underline"><a href="/">Quizzinger</a></h1>
 
 	<svelte:fragment slot="trail">
 		<div class="flex items-center">
