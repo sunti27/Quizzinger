@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -39,8 +39,8 @@ export const actions = {
 		});
 
 		if (error) {
-			form.errors = { email: [], password: [error.message] };
-			return fail(400, { form });
+			form.errors.email = [];
+			return setError(form, 'password', error.message);
 		} else {
 			throw redirect(303, '/account');
 		}

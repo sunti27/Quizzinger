@@ -3,10 +3,11 @@
 
 	export let data;
 
-	const { form, errors, constraints, enhance, reset } = superForm(data.form, {
+	const { form, errors, constraints, enhance } = superForm(data.form, {
 		applyAction: true,
 		invalidateAll: true,
-		resetForm: false
+		resetForm: false,
+		defaultValidator: 'clear'
 	});
 </script>
 
