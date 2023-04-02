@@ -1,13 +1,19 @@
 <script>
+	import { goto } from '$app/navigation';
   	import { superForm } from 'sveltekit-superforms/client';
 
 	export let data;
 
 	const { form, errors, constraints, enhance } = superForm(data.form, {
-		applyAction: true,
+		applyAction: false,
 		invalidateAll: true,
 		resetForm: false,
-		defaultValidator: 'clear'
+		defaultValidator: 'clear',
+		onResult: ({ result }) => {
+			if (result.type === "redirect") {
+				goto(result.location);
+			}
+		},
 	});
 </script>
 
