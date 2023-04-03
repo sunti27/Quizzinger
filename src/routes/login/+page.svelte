@@ -1,5 +1,5 @@
 <script>
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
   	import { superForm } from 'sveltekit-superforms/client';
 
 	export let data;
@@ -11,7 +11,7 @@
 		defaultValidator: 'clear',
 		onResult: ({ result }) => {
 			if (result.type === "redirect") {
-				goto(result.location);
+				goto(result.location, { invalidateAll: true });
 			}
 		},
 	});

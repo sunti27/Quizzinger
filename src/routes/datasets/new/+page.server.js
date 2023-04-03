@@ -17,7 +17,7 @@ export const load = async (event) => {
 	const session = await event.locals.getSession();
 
     // if the user is already logged in return them to the account page
-	if (session) {
+	if (!session) {
 		throw redirect(303, '/login');
 	}
 
