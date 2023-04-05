@@ -29,7 +29,8 @@ export const load = async (event) => {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
-		const { supabase } = event.locals;
+		const { supabase, getSession } = event.locals;
+        const session = await getSession();
 
 		const form = await superValidate(event, schema);
 
@@ -44,7 +45,8 @@ export const actions = {
             .insert({
                 title,
                 desc,
-                is_public
+                is_public,
+                user_id: session?.user?.id
             })
             .select('id')
             .single();
