@@ -8,6 +8,7 @@
 
 	import { AppShell } from '@skeletonlabs/skeleton';
 	import { Drawer } from '@skeletonlabs/skeleton';
+	import { Toast } from '@skeletonlabs/skeleton';
 
 	import Navigation from '$lib/Navigation.svelte';
 	import Header from '$lib/Header.svelte';
@@ -29,6 +30,8 @@
 </script>
 
 <Drawer width="w-auto" rounded="rounded-none"><Navigation /></Drawer>
+
+<Toast />
 
 <AppShell slotSidebarLeft="w-0 lg:w-auto">
 	<svelte:fragment slot="header"><Header loggedIn={!!session} /></svelte:fragment>

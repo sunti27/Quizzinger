@@ -12,6 +12,11 @@
 			icon: 'fa-home',
 		},
 		{
+			href: '/datasets',
+			label: 'Datasets',
+			icon: 'fa-bars-staggered',
+		},
+		{
 			href: '/cards',
 			label: 'Cards',
 			icon: 'fa-rectangle-list',
