@@ -1,31 +1,30 @@
 <script>
-	import { cubicInOut } from 'svelte/easing';
-	import { crossfade } from 'svelte/transition';
     import { SlideToggle } from '@skeletonlabs/skeleton';
 	import { superForm } from 'sveltekit-superforms/client';
-
-	const [send, receive] = crossfade({
-        duration: d => Math.sqrt(d * 300),
-        easing: cubicInOut,
-	});
+    import { toastStore } from '@skeletonlabs/skeleton';
 
     export let data;
 
-    const { form, errors, constraints } = superForm(data.form, {
-		applyAction: false,
+    const { form, errors, constraints, enhance, message } = superForm(data.form, {
+		applyAction: true,
 		invalidateAll: true,
-		resetForm: false,
+		resetForm: true,
 		defaultValidator: 'clear',
+        dataType: 'json',
 	});
 
-  import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+    function addItem() {
+        $form.items = [...$form.items, { question: '', answer: '' }];
+    }
 
+    $: $message && toastStore.trigger({
+        message: $message,
+        background: 'variant-filled-success',
+    });
 </script>
 
-<SuperDebug data={$form} />
-
-<form class="flex flex-col mx-auto my-12 max-w-[50%] justify-center gap-4">
-    <div class="flex items-center justify-between">
+<form method="POST" class="flex flex-col mx-auto my-12 w-11/12 md:max-w-[40%] justify-center gap-4" use:enhance>
+    <div class="flex items-center justify-between gap-4">
         <label class="label">
             <span>Title</span>
             <input
@@ -41,7 +40,7 @@
         </label>
         <label class="label flex flex-col" for="is_public">
             <span>Is public?</span>
-            <SlideToggle class="data-invalid" label="description" name="is_public" bind:checked={$form.is_public} size="lg" rounded="rounded" active="bg-success-200-700-token" />
+            <SlideToggle class="data-invalid" label="description" name="is_public" bind:checked={$form.is_public} size="lg" rounded="rounded" active="bg-success-400-500-token" />
         </label>
     </div>
     <div>
@@ -52,23 +51,49 @@
             type="text"
             name="desc"
             placeholder="Description"
+            data-invalid={$errors.desc}
             bind:value={$form.desc}
             {...$constraints.desc}
             />
     </div>
-    <!-- <div class="relative">
-        {#key wrap}
-            <div class="flex justify-center gap-x-4 w-full absolute" id="hi" class:flex-col={wrap}>
-                <label for="question" in:receive={{key: 1}} out:send={{key: 1}}>
-                    <span class="label">Question</span>
-                    <input class="input" type="text" name="question" placeholder="Why ..." on:input={checkWrap} bind:value={question} />
-                </label>
-                <label for="answer" in:receive={{key: 2}} out:send={{key: 2}}>
-                    <span class="label">Answer</span>
-                    <input class="input" type="text" name="answer" placeholder="Because ..." bind:value={answer} />
-                </label>
-            </div>
-        {/key}
-    </div> -->
-    <button type="submit" class="btn variant-filled-primary ml-auto">Create</button>
+    {#each $form.items as _, idx}
+        <div class="flex justify-center gap-x-4 w-full h-fit flex-col sm:flex-row">
+            <label class="label w-full" for="question">
+                <span>Question #{idx}</span>
+                <input
+                    class="input"
+                    class:input-error={$errors.items?.[idx]?.question}
+                    type="text"
+                    name="question"
+                    placeholder="Why ..."
+                    bind:value={$form.items[idx].question}
+                    {...$constraints.items}
+                />
+                {#if $errors.items?.[idx]?.question}
+                    <span>{$errors.items[idx].question}</span>
+                {/if}
+            </label>
+            <label class="label w-full" for="answer">
+                <span>Answer #{idx}</span>
+                <input
+                    class="input"
+                    class:input-error={$errors.items?.[idx]?.answer}
+                    type="text"
+                    name="answer"
+                    placeholder="Because ..."
+                    bind:value={$form.items[idx].answer}
+                    {...$constraints.items}
+                />
+                {#if $errors.items?.[idx]?.answer}
+                    <span>{$errors.items[idx].answer}</span>
+                {/if}
+            </label>
+        </div>
+    {/each}
+    <div class="flex justify-between items-center">
+        <button type="button" class="btn-icon variant-filled-primary" on:click={addItem}>
+            <i class="fa fa-plus" />
+        </button>
+        <button type="submit" class="btn variant-filled-primary">Create</button>
+    </div>
 </form>

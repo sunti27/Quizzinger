@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { setError, superValidate } from 'sveltekit-superforms/server';
+import { message, setError, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -9,7 +9,7 @@ const schema = z.object({
     items: z.object({
         question: z.string().min(1),
         answer: z.string().min(1)
-    }).array().nonempty()
+    }).array().default([{ question: '', answer: '' }])
 })
 
 /** @type {import('./$types').PageServerLoad} */
@@ -56,6 +56,8 @@ export const actions = {
 
         const dataset_id = response1.data.id;
 
+        form.data.items = form.data.items.filter(item => item.question && item.answer);
+
 		const response2 = await supabase
             .from('Entries')
             .insert(form.data.items.map(item => ({
@@ -67,6 +69,6 @@ export const actions = {
 			return setError(form, 'items', response2.error.message);
 		}
 
-        return { form };
+        return message(form, 'Dataset created successfully!');
     }
 };
