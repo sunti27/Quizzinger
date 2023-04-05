@@ -59,7 +59,7 @@
     {#each $form.items as _, idx}
         <div class="flex justify-center gap-x-4 w-full h-fit flex-col sm:flex-row">
             <label class="label w-full" for="question">
-                <span>Question #{idx}</span>
+                <span>Question #{idx+1}</span>
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.question}
@@ -74,7 +74,7 @@
                 {/if}
             </label>
             <label class="label w-full" for="answer">
-                <span>Answer #{idx}</span>
+                <span>Answer #{idx+1}</span>
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.answer}
