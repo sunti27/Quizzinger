@@ -57,8 +57,6 @@ export const actions = {
 
         const dataset_id = response1.data.id;
 
-        form.data.items = form.data.items.filter(item => item.question && item.answer);
-
 		const response2 = await supabase
             .from('Entries')
             .insert(form.data.items.map(item => ({

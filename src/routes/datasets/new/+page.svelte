@@ -17,6 +17,10 @@
         $form.items = [...$form.items, { question: '', answer: '' }];
     }
 
+    function removeItem(idx) {
+        $form.items = $form.items.filter((_, i) => i !== idx);
+    }
+
     $: $message && toastStore.trigger({
         message: $message,
         background: 'variant-filled-success',
@@ -57,7 +61,7 @@
             />
     </div>
     {#each $form.items as _, idx}
-        <div class="flex justify-center gap-x-4 w-full h-fit flex-col sm:flex-row">
+        <div class="flex justify-center gap-x-4 w-full h-fit flex-col sm:flex-row items-end">
             <label class="label w-full" for="question">
                 <span>Question #{idx+1}</span>
                 <input
@@ -88,11 +92,15 @@
                     <span>{$errors.items[idx].answer}</span>
                 {/if}
             </label>
+            <!-- create delete button -->
+            <button type="button" class="btn-icon variant-soft-primary h-fit mx-auto mb-[2px]" on:click={() => removeItem(idx)}>
+                <i class="fas fa-trash" />
+            </button>
         </div>
     {/each}
     <div class="flex justify-between items-center">
         <button type="button" class="btn-icon variant-filled-primary" on:click={addItem}>
-            <i class="fa fa-plus" />
+            <i class="fas fa-plus" />
         </button>
         <button type="submit" class="btn variant-filled-primary">Create</button>
     </div>
