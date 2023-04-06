@@ -17,6 +17,7 @@
         $form.items = [...$form.items, { question: '', answer: '' }];
     }
 
+    /** @param {number} idx */
     function removeItem(idx) {
         $form.items = $form.items.filter((_, i) => i !== idx);
     }
@@ -27,7 +28,7 @@
     });
 </script>
 
-<form method="POST" class="flex flex-col mx-auto my-12 w-11/12 md:max-w-[40%] justify-center gap-4" use:enhance>
+<form method="POST" class="flex flex-col mx-auto my-12 w-11/12 sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-3xl justify-center gap-4" use:enhance>
     <div class="flex items-center justify-between gap-4">
         <label class="label">
             <span>Title</span>
@@ -61,15 +62,15 @@
             />
     </div>
     {#each $form.items as _, idx}
-        <div class="flex justify-center gap-x-4 w-full h-fit flex-col sm:flex-row items-end">
+        <div class="flex justify-center gap-x-4 gap-y-1 w-full h-fit flex-col md:flex-row items-end">
             <label class="label w-full" for="question">
-                <span>Question #{idx+1}</span>
+                <!-- <span>Question #{idx+1}</span> -->
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.question}
                     type="text"
                     name="question"
-                    placeholder="Why ..."
+                    placeholder="Question #{idx+1}"
                     bind:value={$form.items[idx].question}
                     {...$constraints.items}
                 />
@@ -78,13 +79,13 @@
                 {/if}
             </label>
             <label class="label w-full" for="answer">
-                <span>Answer #{idx+1}</span>
+                <!-- <span>Answer #{idx+1}</span> -->
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.answer}
                     type="text"
                     name="answer"
-                    placeholder="Because ..."
+                    placeholder="Answer #{idx+1}"
                     bind:value={$form.items[idx].answer}
                     {...$constraints.items}
                 />
@@ -93,7 +94,7 @@
                 {/if}
             </label>
             <!-- create delete button -->
-            <button type="button" class="btn-icon variant-soft-primary h-fit mx-auto mb-[2px]" on:click={() => removeItem(idx)}>
+            <button type="button" class="btn-icon variant-soft-primary h-fit ml-auto mb-[2px]" on:click={() => removeItem(idx)}>
                 <i class="fas fa-trash" />
             </button>
         </div>
