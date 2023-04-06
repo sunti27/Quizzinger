@@ -8,25 +8,22 @@ const schema = z.object({
 });
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async (event) => {
-	const session = await event.locals.getSession();
+export const load = async ({ locals, request }) => {
+	const session = await locals.getSession();
 
-    // if the user is already logged in return them to the account page
 	if (session) {
 		throw redirect(303, '/account');
 	}
 
-	const form = await superValidate(event, schema);
+	const form = await superValidate(request, schema);
 
 	return { form };
 };
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	login: async (event) => {
-		const { supabase } = event.locals;
-
-		const form = await superValidate(event, schema);
+	login: async ({ request, locals: {supabase} }) => {
+		const form = await superValidate(request, schema);
 
 		if (!form.valid) {
 			return fail(400, { form })
@@ -34,7 +31,7 @@ export const actions = {
 
 		const { email, password } = form.data;
 
-		const { data, error } = await supabase.auth.signInWithPassword({
+		const { error } = await supabase.auth.signInWithPassword({
 			email, password
 		});
 
@@ -45,10 +42,8 @@ export const actions = {
 			throw redirect(303, '/account');
 		}
 	},
-	register: async (event) => {
-		const { supabase } = event.locals;
-
-		const form = await superValidate(event, schema);
+	register: async ({ request, locals: { supabase } }) => {
+		const form = await superValidate(request, schema);
 
 		if (!form.valid) {
 			return fail(400, { form })
@@ -56,7 +51,7 @@ export const actions = {
 
 		const { email, password } = form.data;
 
-		const { data, error } = await supabase.auth.signUp({
+		const { error } = await supabase.auth.signUp({
 			email, password
 		});
 
