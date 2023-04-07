@@ -62,9 +62,8 @@
             />
     </div>
     {#each $form.items as _, idx}
-        <div class="flex justify-center gap-x-4 gap-y-1 w-full h-fit flex-col md:flex-row items-end">
-            <label class="label w-full" for="question">
-                <!-- <span>Question #{idx+1}</span> -->
+        <div class="w-full h-fit grid grid-cols-[8fr_auto] md:grid-cols-[4fr_4fr_auto] grid-rows-2 md:grid-rows-1 gap-2">
+            <label class="label" for="question">
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.question}
@@ -78,8 +77,7 @@
                     <span>{$errors.items[idx].question}</span>
                 {/if}
             </label>
-            <label class="label w-full" for="answer">
-                <!-- <span>Answer #{idx+1}</span> -->
+            <label class="label row-start-2 md:row-start-1" for="answer">
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.answer}
@@ -93,8 +91,7 @@
                     <span>{$errors.items[idx].answer}</span>
                 {/if}
             </label>
-            <!-- create delete button -->
-            <button type="button" class="btn-icon variant-soft-primary h-fit ml-auto mb-[2px]" on:click={() => removeItem(idx)}>
+            <button type="button" class="btn-icon btn variant-soft-error h-full md:h-auto rounded row-span-2" on:click={() => removeItem(idx)}>
                 <i class="fas fa-trash" />
             </button>
         </div>
