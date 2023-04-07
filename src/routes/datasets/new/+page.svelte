@@ -2,6 +2,7 @@
     import { SlideToggle } from '@skeletonlabs/skeleton';
 	import { superForm } from 'sveltekit-superforms/client';
     import { toastStore } from '@skeletonlabs/skeleton';
+    import { modalStore } from '@skeletonlabs/skeleton';
 
     export let data;
 
@@ -19,7 +20,19 @@
 
     /** @param {number} idx */
     function removeItem(idx) {
-        $form.items = $form.items.filter((_, i) => i !== idx);
+        /** @type {import('@skeletonlabs/skeleton').ModalSettings} */
+        const confirm = {
+            type: 'confirm',
+            title: 'Remove item',
+            body: 'Are you sure you want to remove this item?',
+            response: (yes) => {
+                if (yes) {
+                    $form.items = $form.items.filter((_, i) => i !== idx);
+                }
+            },
+        }
+
+        modalStore.trigger(confirm);
     }
 
     $: $message && toastStore.trigger({
