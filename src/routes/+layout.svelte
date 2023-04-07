@@ -1,14 +1,9 @@
 <script>
-	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-hamlindigo.css';
-	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
 	import '@skeletonlabs/skeleton/styles/all.css';
-	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 
-	import { AppShell } from '@skeletonlabs/skeleton';
-	import { Drawer } from '@skeletonlabs/skeleton';
-	import { Toast } from '@skeletonlabs/skeleton';
+	import { AppShell, Drawer, Toast, Modal } from '@skeletonlabs/skeleton';
 
 	import Navigation from '$lib/Navigation.svelte';
 	import Header from '$lib/Header.svelte';
@@ -31,6 +26,7 @@
 
 <Drawer width="w-auto" rounded="rounded-none"><Navigation /></Drawer>
 
+<Modal />
 <Toast />
 
 <AppShell slotSidebarLeft="w-0 lg:w-auto">

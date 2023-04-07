@@ -5,7 +5,8 @@ export async function load({ locals: { supabase }}) {
         .select(`
             id,
             title,
-            desc
+            desc,
+            is_public
         `);
 
     let datasets = data ?? [];

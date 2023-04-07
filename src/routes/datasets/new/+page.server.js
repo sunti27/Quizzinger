@@ -13,26 +13,25 @@ const schema = z.object({
 })
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async (event) => {
-	const session = await event.locals.getSession();
+export const load = async ({ request, locals: { getSession } }) => {
+	const session = await getSession();
 
     // if the user is already logged in return them to the account page
 	if (!session) {
 		throw redirect(303, '/login');
 	}
 
-	const form = await superValidate(event, schema);
+	const form = await superValidate(request, schema);
 
 	return { form };
 };
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async (event) => {
-		const { supabase, getSession } = event.locals;
+	default: async ({ request, locals: { supabase, getSession } }) => {
         const session = await getSession();
 
-		const form = await superValidate(event, schema);
+		const form = await superValidate(request, schema);
 
 		if (!form.valid) {
 			return fail(400, { form })
@@ -57,8 +56,6 @@ export const actions = {
         }
 
         const dataset_id = response1.data.id;
-
-        form.data.items = form.data.items.filter(item => item.question && item.answer);
 
 		const response2 = await supabase
             .from('Entries')
