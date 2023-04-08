@@ -21,6 +21,11 @@
 			label: 'Cards',
 			icon: 'fa-rectangle-list',
 		},
+		{
+			href: '/qna',
+			label: 'Q&A',
+			icon: 'fa-comment-dots',
+		}
 	];
 
 	function closeDrawer() {

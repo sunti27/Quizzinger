@@ -1,5 +1,9 @@
 <script>
+    import { page } from "$app/stores";
+
     export let data;
+
+    $: method = $page.url.searchParams.get("method") ?? 'cards';
 
 	$: public_datasets = data.datasets.filter(dataset => dataset.is_public);
 	$: private_datasets = data.datasets.filter(dataset => !dataset.is_public);
@@ -15,7 +19,7 @@
 						<header class="card-header"><h3>{dataset.title}</h3></header>
 						<section class="p-4">{dataset.desc}</section>
 						<footer class="card-footer flex flex-row justify-end">
-							<a href="/cards/{dataset.id}" class="btn variant-filled-primary">Learn</a>
+							<a href="/{method}/{dataset.id}" class="btn variant-filled-primary">Learn</a>
 						</footer>
 					</div>
 				{/each}
@@ -31,7 +35,7 @@
 						<header class="card-header"><h3>{dataset.title}</h3></header>
 						<section class="p-4">{dataset.desc}</section>
 						<footer class="card-footer flex flex-row justify-end">
-							<a href="/cards/{dataset.id}" class="btn variant-filled-primary">Learn</a>
+							<a href="/{method}/{dataset.id}" class="btn variant-filled-primary">Learn</a>
 						</footer>
 					</div>
 				{/each}
