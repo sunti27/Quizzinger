@@ -90,7 +90,7 @@
                     <span>{$errors.items[idx].question}</span>
                 {/if}
             </label>
-            <label class="label row-start-2 md:row-start-1" for="answer">
+            <label class="label row-start-2 md:row-start-1 md:col-start-2" for="answer">
                 <input
                     class="input"
                     class:input-error={$errors.items?.[idx]?.answer}
